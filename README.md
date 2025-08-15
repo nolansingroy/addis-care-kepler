@@ -21,22 +21,54 @@ This repository contains a comprehensive analysis of healthcare provider network
 
 ## **🚀 Quick Start**
 
-### **Option 1: Use Included Data (Recommended)**
-The repository includes processed subset data ready for immediate use:
+### **🎯 One-Command Setup (Recommended)**
+```bash
+# Option A: Using the shell script (Unix/Mac/Linux)
+curl -sSL https://raw.githubusercontent.com/nolansingroy/addis-care-kepler/main/start.sh | bash
+
+# Option B: Windows users - download and run start.bat
+# Or manually:
+git clone https://github.com/nolansingroy/addis-care-kepler.git
+cd addis-care-kepler
+python run.py
+```
+**What this does:**
+- ✅ Downloads the full dataset (~1.1GB) from Google Drive
+- ✅ Extracts and organizes all data files
+- ✅ Installs Python dependencies
+- ✅ Launches Streamlit application
+- ✅ Opens your browser automatically
+- ✅ Handles errors gracefully with fallback options
+
+### **🔧 Full Automated Setup**
 ```bash
 # Clone the repository
 git clone https://github.com/nolansingroy/addis-care-kepler.git
 cd addis-care-kepler
 
-# Install dependencies
-pip install -r requirements.txt
+# Run comprehensive setup with options
+python3 setup.py
+```
+**What this does:**
+- ✅ Checks Python version compatibility
+- ✅ Creates all necessary directories
+- ✅ Downloads full dataset with progress tracking
+- ✅ Extracts files with progress indicators
+- ✅ Installs dependencies with error handling
+- ✅ Launches Streamlit and opens browser
+- ✅ Provides fallback to subset data if download fails
 
-# Run the Streamlit app
+### **⚡ Quick Launch (If data already exists)**
+```bash
+# If you already have the data files
+git clone https://github.com/nolansingroy/addis-care-kepler.git
+cd addis-care-kepler
+pip install -r requirements.txt
 streamlit run streamlit_app.py
 ```
 
-### **Option 2: Download Full Dataset**
-For the complete dataset with all 82,608 providers:
+### **📥 Manual Data Download**
+If you prefer to download manually:
 
 1. **Download from Google Drive:**
    - [Large Data Files (1.1GB)](https://drive.google.com/file/d/1s7Pzx9wbf45ZxwiFFgU9m3xsL0W4Wpdh/view?usp=sharing)
@@ -180,9 +212,17 @@ kelper/
 
 ## **🚀 Deployment Options**
 
-### **Local Development:**
+### **Local Development (Automated):**
 ```bash
-# Clone and setup
+# One-command setup and run
+git clone https://github.com/nolansingroy/addis-care-kepler.git
+cd addis-care-kepler
+python run.py
+```
+
+### **Local Development (Manual):**
+```bash
+# Clone and setup manually
 git clone https://github.com/nolansingroy/addis-care-kepler.git
 cd addis-care-kepler
 pip install -r requirements.txt
