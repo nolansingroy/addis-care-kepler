@@ -4,6 +4,14 @@
 
 This repository contains a comprehensive analysis of healthcare provider networks across 10 states, focusing on the Medicaid crisis and opportunities for Addis Care's AI-driven elder care solutions.
 
+<img width="590" height="333" alt="image" src="https://github.com/user-attachments/assets/fb850d43-7b0b-4ada-ba3c-f7019f7af257" />
+
+
+[Kelpler MAP URL](https://kepler.gl/demo/map?mapUrl=https://dl.dropboxusercontent.com/scl/fi/ij2y9ykzf0y5fxapbgg9d/keplergl_81ay9vj.json?rlkey=fdcxf0cc9zuigaujl30eyuda2&dl=0)
+
+[Addis Care Notion Medicaid Analysis](https://addiscare.notion.site/ADDIS-CARE-MEDICAID-ANALYSIS-250eb46723238038996fd41318cf45a1)
+
+
 ## **📊 Key Findings**
 
 ### **Market Opportunity**
@@ -35,7 +43,8 @@ python run.py
 **What this does:**
 - ✅ Downloads the full dataset (~1.1GB) from Google Drive
 - ✅ Extracts and organizes all data files
-- ✅ Installs Python dependencies
+- ✅ Installs Python dependencies (handles system restrictions)
+- ✅ Creates virtual environment if needed
 - ✅ Launches Streamlit application
 - ✅ Opens your browser automatically
 - ✅ Handles errors gracefully with fallback options

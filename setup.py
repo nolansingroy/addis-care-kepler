@@ -119,7 +119,7 @@ def install_dependencies():
             
         result = subprocess.run(
             [sys.executable, "-m", "pip", "install", "-r", REQUIREMENTS_FILE],
-            capture_output=True,
+            capture_output=False,  # Show output
             text=True
         )
         
@@ -127,7 +127,7 @@ def install_dependencies():
             print("✅ Dependencies installed successfully")
             return True
         else:
-            print(f"❌ Error installing dependencies: {result.stderr}")
+            print(f"❌ Error installing dependencies")
             return False
             
     except Exception as e:

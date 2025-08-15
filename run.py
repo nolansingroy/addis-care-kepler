@@ -27,6 +27,100 @@ def open_browser():
     except:
         print("🌐 Please open your browser to http://localhost:8501")
 
+def install_dependencies():
+    """Install Python dependencies with proper error handling"""
+    print("📦 Installing Python dependencies...")
+    
+    try:
+        # Check if requirements.txt exists
+        if not os.path.exists("requirements.txt"):
+            print("❌ requirements.txt not found")
+            return False
+        
+        # Try to install with --user flag first
+        try:
+            result = subprocess.run(
+                [sys.executable, "-m", "pip", "install", "--user", "-r", "requirements.txt"],
+                capture_output=False,  # Show output
+                text=True
+            )
+            if result.returncode == 0:
+                print("✅ Dependencies installed successfully")
+                return True
+        except:
+            pass
+        
+        # If that fails, try with --break-system-packages
+        try:
+            result = subprocess.run(
+                [sys.executable, "-m", "pip", "install", "--break-system-packages", "-r", "requirements.txt"],
+                capture_output=False,  # Show output
+                text=True
+            )
+            if result.returncode == 0:
+                print("✅ Dependencies installed successfully")
+                return True
+        except:
+            pass
+        
+        # If both fail, suggest virtual environment
+        print("❌ Could not install dependencies due to system restrictions")
+        print("💡 Please create a virtual environment and try again:")
+        print("   python3 -m venv venv")
+        print("   source venv/bin/activate")
+        print("   pip install -r requirements.txt")
+        return False
+            
+    except Exception as e:
+        print(f"❌ Error installing dependencies: {e}")
+        return False
+
+def check_streamlit():
+    """Check if Streamlit is installed"""
+    try:
+        subprocess.run([sys.executable, "-c", "import streamlit"], 
+                      check=True, capture_output=True)
+        return True
+    except:
+        return False
+
+def create_venv():
+    """Create a virtual environment and install dependencies"""
+    print("🐍 Creating virtual environment...")
+    
+    try:
+        # Create virtual environment
+        subprocess.run([sys.executable, "-m", "venv", "venv"], check=True)
+        print("✅ Virtual environment created")
+        
+        # Determine the correct pip path
+        if os.name == 'nt':  # Windows
+            pip_path = "venv/Scripts/pip"
+        else:  # Unix/Linux/macOS
+            pip_path = "venv/bin/pip"
+        
+        # Install dependencies in virtual environment
+        result = subprocess.run([pip_path, "install", "-r", "requirements.txt"], 
+                              capture_output=False, text=True)
+        
+        if result.returncode == 0:
+            print("✅ Dependencies installed in virtual environment")
+            return True
+        else:
+            print("❌ Failed to install dependencies in virtual environment")
+            return False
+            
+    except Exception as e:
+        print(f"❌ Error creating virtual environment: {e}")
+        return False
+
+def get_venv_python():
+    """Get the Python executable from virtual environment"""
+    if os.name == 'nt':  # Windows
+        return "venv/Scripts/python"
+    else:  # Unix/Linux/macOS
+        return "venv/bin/python"
+
 def main():
     """Quick start function"""
     print_banner()
@@ -60,14 +154,20 @@ def main():
             print(f"⚠️ Download failed: {e}")
             print("⚠️ Using subset data only (if available)")
     
-    # Install dependencies if needed
-    print("📦 Checking dependencies...")
-    try:
-        subprocess.run([sys.executable, "-m", "pip", "install", "-r", "requirements.txt"], 
-                      check=True, capture_output=True)
-        print("✅ Dependencies ready")
-    except:
-        print("⚠️ Some dependencies may be missing")
+    # Check and install dependencies
+    venv_created = False
+    if not check_streamlit():
+        print("📦 Streamlit not found - installing dependencies...")
+        if not install_dependencies():
+            print("🐍 Trying to create virtual environment...")
+            if create_venv():
+                venv_created = True
+                print("✅ Using virtual environment")
+            else:
+                print("❌ Failed to install dependencies. Please run: pip install -r requirements.txt")
+                sys.exit(1)
+    else:
+        print("✅ Dependencies already installed")
     
     # Start browser opening in background
     browser_thread = threading.Thread(target=open_browser)
@@ -81,9 +181,14 @@ def main():
     print("-" * 50)
     
     try:
-        subprocess.run([sys.executable, "-m", "streamlit", "run", "streamlit_app.py"])
+        # Use virtual environment Python if it was created
+        python_exec = get_venv_python() if venv_created else sys.executable
+        subprocess.run([python_exec, "-m", "streamlit", "run", "streamlit_app.py"])
     except KeyboardInterrupt:
         print("\n👋 Streamlit application stopped")
+    except Exception as e:
+        print(f"❌ Error running Streamlit: {e}")
+        print("Please ensure Streamlit is installed: pip install streamlit")
 
 if __name__ == "__main__":
     main()

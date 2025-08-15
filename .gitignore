@@ -44,9 +44,7 @@ Thumbs.db
 
 # EXCLUDE ALL LARGE DATA FILES
 # Raw data files
-data/raw/NPPES_Data_Dissemination_August_2025/npidata_pfile_20050523-20250810.csv
-data/raw/NPPES_Data_Dissemination_August_2025/endpoint_pfile_20050523-20250810.csv
-data/raw/NPPES_Data_Dissemination_August_2025/pl_pfile_20050523-20250810.csv
+data/raw/
 
 # EXCLUDE ALL PROCESSED FILES EXCEPT SUBSET
 data/processed/*
@@ -57,7 +55,6 @@ data/enriched/*
 !data/enriched/providers_medicare_medicaid_subset.csv
 
 # Large zip files
-data/large_data_files.zip
 *.zip
 
 # Large files (over 5MB)
