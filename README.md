@@ -1,15 +1,68 @@
 # **Addis Care: Medicaid Crisis Analysis**
 
-## **🎯 Project Overview**
+## **🏥 Healthcare Provider Network Analysis & Medicaid Crisis Assessment**
 
-This repository contains comprehensive analysis of the Medicaid crisis impact on elder care providers, identifying high-risk areas and market opportunities for Addis Care's AI-driven solutions.
+This repository contains a comprehensive analysis of healthcare provider networks across 10 states, focusing on the Medicaid crisis and opportunities for Addis Care's AI-driven elder care solutions.
 
 ## **📊 Key Findings**
 
+### **Market Opportunity**
+- **82,608 total providers** across 10 states (MN, CA, OR, WA, TX, AZ, IL, MD, VA, FL)
+- **66,013 HCBS providers** (Medicaid-oriented home health services)
+- **16,595 ALF providers** (Assisted Living Facilities)
+- **1,861 high-risk ZIP codes** identified for Addis Care deployment
+- **$4.6B total market potential** for AI-driven elder care solutions
+
+### **Medicaid Crisis Impact**
 - **12 million people** at risk of losing Medicaid access
-- **82,608 providers** across 10 states facing policy changes
-- **1,861 high-risk ZIP codes** identified
-- **$4.6B total market potential** for Addis Care solutions
+- **HCBS providers** heavily dependent on Medicaid funding
+- **Geographic gaps** in provider coverage identified
+- **Critical need** for alternative care solutions
+
+## **🚀 Quick Start**
+
+### **Option 1: Use Included Data (Recommended)**
+The repository includes processed subset data ready for immediate use:
+```bash
+# Clone the repository
+git clone https://github.com/nolansingroy/addis-care-kepler.git
+cd addis-care-kepler
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run the Streamlit app
+streamlit run streamlit_app.py
+```
+
+### **Option 2: Download Full Dataset**
+For the complete dataset with all 82,608 providers:
+
+1. **Download from Google Drive:**
+   - [Large Data Files (1.1GB)](https://drive.google.com/file/d/1s7Pzx9wbf45ZxwiFFgU9m3xsL0W4Wpdh/view?usp=sharing)
+   - Contains all processed and enriched data files
+
+2. **Extract and Setup:**
+   ```bash
+   # Download the zip file
+   wget "https://drive.google.com/uc?export=download&id=1s7Pzx9wbf45ZxwiFFgU9m3xsL0W4Wpdh" -O large_data_files.zip
+   
+   # Extract to data folder
+   unzip large_data_files.zip -d data/
+   
+   # Run the application
+   streamlit run streamlit_app.py
+   ```
+
+3. **Alternative Download Method:**
+   ```bash
+   # Using curl
+   curl -L "https://drive.google.com/uc?export=download&id=1s7Pzx9wbf45ZxwiFFgU9m3xsL0W4Wpdh" -o large_data_files.zip
+   
+   # Extract and run
+   unzip large_data_files.zip -d data/
+   streamlit run streamlit_app.py
+   ```
 
 ## **📁 Repository Structure**
 
@@ -17,21 +70,22 @@ This repository contains comprehensive analysis of the Medicaid crisis impact on
 kelper/
 ├── README.md                           # This file - Project overview and key findings
 ├── requirements.txt                    # Python dependencies
-├── app.py                             # Streamlit interactive dashboard
-├── .gitignore                         # Git ignore rules
+├── streamlit_app.py                   # Streamlit interactive dashboard
+├── DATA_DOWNLOAD_GUIDE.md             # Detailed data download instructions
 │
-├── data/                              # Data files (not tracked in git)
-│   ├── raw/                           # Original NPPES data sources
+├── data/                              # Data files
 │   ├── processed/                     # Cleaned and geocoded provider data
+│   │   ├── providers_geocoded_subset.csv    # 10,326 providers (included)
+│   │   └── providers_geocoded_tmp.csv       # 82,608 providers (download from Drive)
 │   └── enriched/                      # Enhanced data with additional features
+│       └── providers_medicare_medicaid_subset.csv  # Enriched subset (included)
 │
 ├── scripts/                           # Analysis and processing scripts
 │   ├── analysis/                      # Medicaid crisis analysis scripts
 │   │   ├── addis_care_high_risk_analysis.py      # High-risk area identification
 │   │   └── addis_care_real_data_analysis.py      # Real data market analysis
 │   ├── providers_pipeline_google.py   # Provider data processing pipeline
-│   ├── geocode_penalties.py           # Geocoding utilities
-│   └── ...                           # Other processing scripts
+│   └── geocode_penalties.py           # Geocoding utilities
 │
 ├── analysis/                          # Analysis results and reports
 │   └── medicaid_crisis/               # Medicaid crisis analysis documents
@@ -39,9 +93,6 @@ kelper/
 │       └── ADDIS_CARE_HIGH_RISK_ANALYSIS.md          # Risk methodology
 │
 ├── docs/                              # Documentation
-│   ├── analysis/                      # Analysis documentation
-│   │   ├── DATA_GUIDE_FOR_ADVISORS.md               # Guide for advisors
-│   │   └── 12M_medicaid_loss_analysis.md            # 12M Medicaid loss impact
 │   ├── ANALYSIS_GUIDE.md              # Step-by-step analysis instructions
 │   ├── DATA_DICTIONARY.md             # Detailed data schema documentation
 │   └── STREAMLIT_DEPLOYMENT.md        # Dashboard deployment guide
@@ -49,118 +100,36 @@ kelper/
 └── venv/                              # Virtual environment (not tracked)
 ```
 
-## **🚨 Key Analysis Files**
+## **🌐 Streamlit Application**
 
-### **Medicaid Crisis Analysis**
-- `analysis/medicaid_crisis/ADDIS_CARE_MEDICAID_CRISIS_ANALYSIS.md` - Complete Medicaid crisis analysis
-- `analysis/medicaid_crisis/ADDIS_CARE_HIGH_RISK_ANALYSIS.md` - High-risk area identification methodology
-- `scripts/analysis/addis_care_high_risk_analysis.py` - High-risk area calculation script
-- `scripts/analysis/addis_care_real_data_analysis.py` - Real data analysis script
+### **Interactive Dashboard Features:**
+- **📊 Dashboard Overview** - Key metrics and visualizations
+- **🗺️ Interactive Map** - Provider locations and clustering
+- **📈 Geographic Analysis** - Density and distribution patterns
+- **🤖 AI Agent** - Natural language queries about the data
+- **🔍 Data Explorer** - Filter and search functionality
+- **🚨 Medicaid Crisis Analysis** - Risk assessment and opportunities
 
-### **Documentation**
-- `docs/analysis/DATA_GUIDE_FOR_ADVISORS.md` - Data guide for advisors
-- `docs/analysis/12M_medicaid_loss_analysis.md` - 12M Medicaid loss impact analysis
+### **Deploy to Streamlit Cloud:**
+1. Fork this repository
+2. Go to [share.streamlit.io](https://share.streamlit.io)
+3. Connect your GitHub repository
+4. Set main file to `streamlit_app.py`
+5. Deploy!
 
-## **🏆 High-Risk Areas Identified**
+## **📈 Business Intelligence & Sample Questions**
 
-### **CRITICAL RISK (374 ZIP codes)**
-Top areas most vulnerable to Medicaid policy changes:
+### **Operational Analysis**
+- "Which ZIP codes have the highest provider density?"
+- "Are there geographic gaps in provider coverage?"
+- "How many providers are in high-risk ZIP codes?"
+- "Which states have the most critical risk areas?"
 
-1. **ZIP 77036 (TX)**: 13 ALFs, 453 HCBS (466 total) - **CRITICAL RISK**
-2. **ZIP 91411 (CA)**: 6 ALFs, 290 HCBS (296 total) - **CRITICAL RISK**
-3. **ZIP 77407 (TX)**: 17 ALFs, 277 HCBS (294 total) - **CRITICAL RISK**
-4. **ZIP 33186 (FL)**: 60 ALFs, 233 HCBS (293 total) - **CRITICAL RISK**
-5. **ZIP 33330 (FL)**: 4 ALFs, 264 HCBS (268 total) - **CRITICAL RISK**
-
-### **Risk Factors Identified**
-- **HCBS-Dominant Areas** (>70% HCBS providers)
-- **High Provider Density** (>100 total providers)
-- **ALF-Heavy Areas** (>50% ALF providers)
-
-## **📈 Revenue Projections**
-
-### **Market Potential**
-- **Total Market**: $4.6B annual revenue potential
-- **Year 1**: $22.9M (0.5% adoption)
-- **Year 2**: $91.5M (2.0% adoption)
-- **Year 3**: $457.5M (10.0% adoption)
-
-### **Pricing Model**
-- **$125 per resident/client per month** for both ALF and HCBS
-- **Same pricing model** for both provider types
-
-## **💡 Addis Care Value Proposition**
-
-**For Both ALF and HCBS Providers:**
-
-1. **Staff Training & Retention**: AI-driven training for 82,608 facilities
-2. **Documentation & Compliance**: Streamlined operations for all facilities
-3. **Family Communication**: Real-time communication and coordination
-4. **Care Quality Improvement**: AI-driven insights and personalized care plans
-
-## **🚀 Quick Start**
-
-### **Setup Environment**
-```bash
-# Clone the repository
-git clone <repository-url>
-cd kelper
-
-# Create virtual environment
-python3 -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-# Install dependencies
-pip install -r requirements.txt
-```
-
-### **Run Analysis**
-```bash
-# Run high-risk area analysis
-python scripts/analysis/addis_care_high_risk_analysis.py
-
-# Run real data analysis
-python scripts/analysis/addis_care_real_data_analysis.py
-```
-
-### **Launch Dashboard**
-```bash
-# Start Streamlit app
-streamlit run app.py
-```
-
-## **📋 Data Sources**
-
-- **NPPES Database**: Provider information and geographic data
-- **Real Provider Data**: 82,608 providers across 10 states
-- **Geographic Analysis**: ZIP code level provider distribution
-
-## **⚠️ Important Disclaimers**
-
-- **No real Medicare/Medicaid enrollment data** available in current dataset
-- **Risk assessment based on provider characteristics** and industry knowledge
-- **Revenue projections based on clearly stated assumptions**
-- **Analysis focuses on geographic opportunities and market density**
-
-## **🎯 Strategic Recommendations**
-
-### **Phase 1 (0-3 months)**: Critical risk ZIP codes
-### **Phase 2 (3-6 months)**: High risk areas + HCBS market entry
-### **Phase 3 (6-12 months)**: Market leadership and industry standard
-
-## **📊 Business Intelligence & Sample Questions**
-
-### **Strategic Planning Questions**
+### **Strategic Planning**
 - "Which states have the highest HCBS provider density?"
 - "Are there geographic gaps in assisted living coverage?"
 - "Which markets are underserved for home health services?"
-- "What's the provider-to-population ratio by region?"
-
-### **Medicaid Crisis Analysis**
-- "Which areas have the highest Medicaid vulnerability?"
-- "Are there Medicaid coverage gaps in specific regions?"
-- "How many providers are in high-risk ZIP codes?"
-- "Which states have the most critical risk areas?"
+- "What's the provider density by region?"
 
 ### **Competitive Intelligence**
 - "Who are the major providers in each state?"
@@ -168,52 +137,110 @@ streamlit run app.py
 - "What's the market concentration by provider type?"
 - "Are there opportunities for new market entry?"
 
-### **Operational Analysis**
-- "How far do patients travel to access providers?"
-- "Which areas need more provider recruitment?"
-- "What's the optimal provider network configuration?"
-- "How does provider distribution affect access?"
+### **Medicaid Crisis Analysis**
+- "Which areas have the highest Medicaid vulnerability?"
+- "Are there Medicaid coverage gaps in specific regions?"
+- "How many providers are in high-risk ZIP codes?"
+- "Which states have the most critical risk areas?"
 
-## **🤖 Interactive Analysis**
+## **🔍 Interactive Analysis**
 
-### **Streamlit Dashboard Features**
-- 📊 **Interactive Dashboard**: Key metrics, charts, and real-time data
-- 🗺️ **Interactive Map**: All 82,608 providers with color-coded locations
-- 🤖 **AI Agent**: Natural language queries about the data
-- 📈 **Geographic Analysis**: Density heatmaps and ZIP code analysis
-- 🔍 **Data Explorer**: Filter, search, and export provider data
+### **Data Explorer Features:**
+- **Geographic filtering** by state, city, ZIP code
+- **Provider type filtering** (HCBS, ALF)
+- **Search functionality** by provider name
+- **Coordinate-based filtering** for map analysis
 
-### **AI Agent Capabilities**
-Ask questions in plain English:
-- "How many providers are in California?"
-- "Which state has the most providers?"
-- "Show me geographic density analysis"
-- "What are the provider types?"
-- "Show me high-risk areas for Medicaid policy changes"
+### **AI Agent Capabilities:**
+- **Provider count queries** by region and type
+- **Geographic distribution analysis**
+- **Medicare/Medicaid enrollment insights**
+- **Market opportunity identification**
+- **Risk area assessment**
 
-## **📈 Key Insights Available**
+## **📊 Key Insights Available**
 
-### **Coverage Analysis**
-- **Provider Density**: High vs low concentration areas
-- **Geographic Gaps**: Underserved regions
-- **State Comparisons**: Provider distribution patterns
-- **Urban vs Rural**: Access disparities
+### **Provider Network Analysis:**
+- **82,608 total providers** across 10 states
+- **Geographic distribution** patterns
+- **Provider type concentration** by region
+- **Service area coverage** gaps
 
-### **Network Quality**
-- **Provider Types**: HCBS vs ALF distribution
-- **Specialty Mix**: Taxonomy code analysis
-- **Organization vs Individual**: Entity type patterns
-- **Geographic Spread**: Coverage breadth
+### **Medicaid Crisis Impact:**
+- **HCBS provider vulnerability** (66,013 providers)
+- **Geographic risk assessment** by ZIP code
+- **Service gap identification** in underserved areas
+- **Market opportunity mapping** for Addis Care
 
-### **Market Intelligence**
-- **Competition Analysis**: Provider density by market
-- **Expansion Opportunities**: Underserved areas
-- **Network Adequacy**: Sufficient provider coverage
-- **Risk Assessment**: Coverage gap identification
+### **Competitive Intelligence:**
+- **Market concentration** analysis
+- **Provider density** by region
+- **Competitive hotspot** identification
+- **Market entry opportunity** assessment
 
+## **🚀 Deployment Options**
 
-For questions about this analysis or Addis Care's solutions, please refer to the documentation in the `docs/` directory.
+### **Local Development:**
+```bash
+# Clone and setup
+git clone https://github.com/nolansingroy/addis-care-kepler.git
+cd addis-care-kepler
+pip install -r requirements.txt
+
+# Download full dataset (optional)
+wget "https://drive.google.com/uc?export=download&id=1s7Pzx9wbf45ZxwiFFgU9m3xsL0W4Wpdh" -O large_data_files.zip
+unzip large_data_files.zip -d data/
+
+# Run application
+streamlit run streamlit_app.py
+```
+
+### **Streamlit Cloud:**
+- **Automatic deployment** from GitHub
+- **Public URL** for sharing
+- **Real-time updates** on code changes
+- **No server management** required
+
+### **Docker Deployment:**
+```bash
+# Build and run with Docker
+docker build -t addis-care-kepler .
+docker run -p 8501:8501 addis-care-kepler
+```
+
+## **📋 Data Sources**
+
+### **Primary Data:**
+- **NPPES (National Provider Identifier)** - CMS provider database
+- **Google Maps Geocoding API** - Address to coordinate conversion
+- **Census Geocoding API** - Alternative geocoding service
+
+### **Enriched Data:**
+- **Medicare/Medicaid enrollment** (simulated for demonstration)
+- **Provider type classification** (HCBS, ALF)
+- **Geographic clustering** analysis
+- **Risk assessment** scoring
+
+## **🔧 Technical Requirements**
+
+### **Python Dependencies:**
+- `streamlit>=1.28.0` - Web application framework
+- `pandas>=2.0.0` - Data manipulation
+- `plotly>=5.15.0` - Interactive visualizations
+- `folium>=0.14.0` - Interactive maps
+- `numpy>=1.24.0` - Numerical computing
+
+### **API Requirements:**
+- **Google Maps API Key** (for geocoding)
+- **Census API** (alternative geocoding)
+
+## **📞 Support & Contact**
+
+For questions about the analysis, data, or deployment:
+- **Repository Issues**: [GitHub Issues](https://github.com/nolansingroy/addis-care-kepler/issues)
+- **Documentation**: See `/docs/` folder for detailed guides
+- **Data Questions**: Check `DATA_DICTIONARY.md` for schema details
 
 ---
 
-*This analysis is based on real provider data from NPPES database. Medicare/Medicaid enrollment status is not available in the current dataset.*
+**Addis Care: AI-Driven Solutions for the Medicaid Crisis** 🏥

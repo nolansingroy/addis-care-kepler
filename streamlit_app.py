@@ -53,15 +53,15 @@ st.markdown("""
 def load_data():
     """Load and cache the healthcare provider data"""
     try:
-        # Try to load Medicare/Medicaid enriched data first
+        # Try to load Medicare/Medicaid enriched subset data first
         try:
-            df = pd.read_csv('data/enriched/providers_medicare_medicaid_demo.csv')
-            st.success("✅ Loaded Medicare/Medicaid enriched data!")
+            df = pd.read_csv('data/enriched/providers_medicare_medicaid_subset.csv')
+            st.success("✅ Loaded Medicare/Medicaid enriched subset data!")
         except FileNotFoundError:
-            # Fall back to basic geocoded data
+            # Fall back to basic geocoded subset data
             try:
-                df = pd.read_csv('data/processed/providers_geocoded_tmp.csv')
-                st.info("ℹ️ Loaded basic geocoded data (no Medicare/Medicaid info)")
+                df = pd.read_csv('data/processed/providers_geocoded_subset.csv')
+                st.info("ℹ️ Loaded basic geocoded subset data (no Medicare/Medicaid info)")
             except FileNotFoundError:
                 # Create sample data for demonstration
                 st.warning("⚠️ No data files found. Using sample data for demonstration.")
