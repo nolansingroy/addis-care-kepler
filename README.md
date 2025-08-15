@@ -38,7 +38,7 @@ curl -sSL https://raw.githubusercontent.com/nolansingroy/addis-care-kepler/main/
 # Or manually:
 git clone https://github.com/nolansingroy/addis-care-kepler.git
 cd addis-care-kepler
-python run.py
+python3 run.py
 ```
 **What this does:**
 - ✅ Downloads the full dataset (~1.1GB) from Google Drive
