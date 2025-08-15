@@ -121,38 +121,60 @@ def get_venv_python():
     else:  # Unix/Linux/macOS
         return "venv/bin/python"
 
+def check_full_dataset():
+    """Check if full dataset files exist"""
+    full_dataset_files = [
+        "data/processed/providers_geocoded_tmp.csv",
+        "data/enriched/providers_medicare_medicaid_demo.csv"
+    ]
+    return all(os.path.exists(f) for f in full_dataset_files)
+
+def check_subset_dataset():
+    """Check if subset dataset files exist"""
+    subset_dataset_files = [
+        "data/processed/providers_geocoded_subset.csv",
+        "data/enriched/providers_medicare_medicaid_subset.csv"
+    ]
+    return all(os.path.exists(f) for f in subset_dataset_files)
+
+def download_full_dataset():
+    """Download the full dataset from Google Drive"""
+    print("📥 Downloading full dataset from Google Drive...")
+    print("This will download ~1.1GB of data...")
+    
+    try:
+        # Download
+        subprocess.run([
+            sys.executable, "-c", 
+            "import requests; import zipfile; import os; "
+            "print('Downloading from Google Drive...'); "
+            "r=requests.get('https://drive.google.com/uc?export=download&id=1s7Pzx9wbf45ZxwiFFgU9m3xsL0W4Wpdh'); "
+            "open('large_data_files.zip','wb').write(r.content); "
+            "print('Extracting files...'); "
+            "zipfile.ZipFile('large_data_files.zip').extractall('data'); "
+            "os.remove('large_data_files.zip'); "
+            "print('✅ Data ready!')"
+        ], check=True)
+        print("✅ Full dataset downloaded and extracted!")
+        return True
+    except Exception as e:
+        print(f"❌ Download failed: {e}")
+        return False
+
 def main():
     """Quick start function"""
     print_banner()
     
     # Check if data exists
-    if os.path.exists("data/processed/providers_geocoded_tmp.csv"):
+    if check_full_dataset():
         print("✅ Full dataset found - launching app...")
-    elif os.path.exists("data/processed/providers_geocoded_subset.csv"):
+    elif check_subset_dataset():
         print("✅ Subset data found - launching app...")
     else:
         print("📥 No data found - downloading from Google Drive...")
-        print("This will download ~1.1GB of data...")
-        
-        # Download and extract
-        try:
-            print("📥 Downloading large dataset...")
-            # Download
-            subprocess.run([
-                sys.executable, "-c", 
-                "import requests; import zipfile; import os; "
-                "print('Downloading from Google Drive...'); "
-                "r=requests.get('https://drive.google.com/uc?export=download&id=1s7Pzx9wbf45ZxwiFFgU9m3xsL0W4Wpdh'); "
-                "open('large_data_files.zip','wb').write(r.content); "
-                "print('Extracting files...'); "
-                "zipfile.ZipFile('large_data_files.zip').extractall('data'); "
-                "os.remove('large_data_files.zip'); "
-                "print('✅ Data ready!')"
-            ], check=True)
-            print("✅ Data downloaded and extracted!")
-        except Exception as e:
-            print(f"⚠️ Download failed: {e}")
-            print("⚠️ Using subset data only (if available)")
+        if not download_full_dataset():
+            print("❌ Failed to download full dataset. Exiting.")
+            sys.exit(1)
     
     # Check and install dependencies
     venv_created = False

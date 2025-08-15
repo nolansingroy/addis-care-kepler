@@ -12,7 +12,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import folium
-from streamlit_folium import folium_static
+from streamlit_folium import st_folium
 import json
 from datetime import datetime
 import os
@@ -53,19 +53,24 @@ st.markdown("""
 def load_data():
     """Load and cache the healthcare provider data"""
     try:
-        # Try to load Medicare/Medicaid enriched subset data first
+        # Try to load full dataset first (if available)
         try:
-            df = pd.read_csv('data/enriched/providers_medicare_medicaid_subset.csv')
-            st.success("✅ Loaded Medicare/Medicaid enriched subset data!")
+            df = pd.read_csv('data/enriched/providers_medicare_medicaid_demo.csv')
+            st.success("✅ Loaded full Medicare/Medicaid enriched dataset!")
         except FileNotFoundError:
-            # Fall back to basic geocoded subset data
+            # Try to load Medicare/Medicaid enriched subset data
             try:
-                df = pd.read_csv('data/processed/providers_geocoded_subset.csv')
-                st.info("ℹ️ Loaded basic geocoded subset data (no Medicare/Medicaid info)")
+                df = pd.read_csv('data/enriched/providers_medicare_medicaid_subset.csv')
+                st.success("✅ Loaded Medicare/Medicaid enriched subset data!")
             except FileNotFoundError:
-                # Create sample data for demonstration
-                st.warning("⚠️ No data files found. Using sample data for demonstration.")
-                df = create_sample_data()
+                # Fall back to basic geocoded subset data
+                try:
+                    df = pd.read_csv('data/processed/providers_geocoded_subset.csv')
+                    st.info("ℹ️ Loaded basic geocoded subset data (no Medicare/Medicaid info)")
+                except FileNotFoundError:
+                    # Create sample data for demonstration
+                    st.warning("⚠️ No data files found. Using sample data for demonstration.")
+                    df = create_sample_data()
         
         # Clean data - handle NaN values
         df['org_or_person_name'] = df['org_or_person_name'].fillna('Unknown Provider')
@@ -307,7 +312,7 @@ def show_interactive_map(df):
             icon=folium.Icon(color=color, icon='info-sign')
         ).add_to(m)
     
-    folium_static(m)
+    st_folium(m, width=1200, height=600)
 
 def show_geographic_analysis(df):
     """Show geographic analysis"""
@@ -319,7 +324,7 @@ def show_geographic_analysis(df):
     fig = px.choropleth(
         locations=state_density.index,
         locationmode="USA-states",
-        z=state_density.values,
+        color=state_density.values,
         scope="usa",
         title="Provider Density by State"
     )
