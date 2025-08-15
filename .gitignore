@@ -42,28 +42,26 @@ ENV/
 ehthumbs.db
 Thumbs.db
 
-# Large data files - EXCLUDE ALL LARGE FILES
+# EXCLUDE ALL LARGE DATA FILES
+# Raw data files
 data/raw/NPPES_Data_Dissemination_August_2025/npidata_pfile_20050523-20250810.csv
 data/raw/NPPES_Data_Dissemination_August_2025/endpoint_pfile_20050523-20250810.csv
 data/raw/NPPES_Data_Dissemination_August_2025/pl_pfile_20050523-20250810.csv
 
-# Large processed files - EXCLUDE ALL LARGE FILES
-data/processed/providers_geocoded_tmp.csv
-data/processed/kepler_penalties_geocoded.csv
-data/processed/Archive.zip
-data/processed/providers_geocoded_sample.csv
+# EXCLUDE ALL PROCESSED FILES EXCEPT SUBSET
+data/processed/*
+!data/processed/providers_geocoded_subset.csv
 
-# Large enriched files - EXCLUDE ALL LARGE FILES
-data/enriched/providers_medicare_medicaid_demo.csv
-data/enriched/providers_enriched_medicare_medicaid.csv
-data/enriched/kepler_medicare_medicaid_demo.csv
-data/enriched/providers_medicare_medicaid_sample.csv
+# EXCLUDE ALL ENRICHED FILES EXCEPT SUBSET
+data/enriched/*
+!data/enriched/providers_medicare_medicaid_subset.csv
 
 # Large zip files
 data/large_data_files.zip
 *.zip
 
-# Only include subset files
+# Large files (over 5MB)
+*.csv
 !data/processed/providers_geocoded_subset.csv
 !data/enriched/providers_medicare_medicaid_subset.csv
 
