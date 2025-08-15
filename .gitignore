@@ -21,12 +21,10 @@ wheels/
 *.egg
 MANIFEST
 
-# Virtual environments
+# Virtual Environment
 venv/
 env/
 ENV/
-env.bak/
-venv.bak/
 
 # IDE
 .vscode/
@@ -44,25 +42,26 @@ venv.bak/
 ehthumbs.db
 Thumbs.db
 
-# Data files (large files that shouldn't be in git)
-data/raw/*.csv
-data/raw/*.zip
-data/raw/*.json
-*.cache
-geocode_cache.csv
-geoids_cache.csv
-medicare_medicaid_cache.json
+# Data files (large files)
+data/raw/NPPES_Data_Dissemination_August_2025/npidata_pfile_20050523-20250810.csv
+data/raw/NPPES_Data_Dissemination_August_2025/endpoint_pfile_20050523-20250810.csv
+data/raw/NPPES_Data_Dissemination_August_2025/pl_pfile_20050523-20250810.csv
+
+# Large data files
+*.csv
+!data/enriched/*.csv
+!data/processed/*.csv
 
 # Logs
 *.log
 logs/
 
+# API Keys and sensitive data
+.env
+*.key
+secrets/
+
 # Temporary files
 *.tmp
 *.temp
-_census_batch_*.csv
-
-# API keys and sensitive data
-.env
-*.key
-secrets.json
+cache/
